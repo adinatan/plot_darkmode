@@ -11,7 +11,7 @@ is dark theme legible using a desaturation and brightness approach.
 Preparing this function I was inspired by https://material.io/design/color/dark-theme.html
 
 
-How to the function:
+How to use the function:
  generate or import a Matlab figure and run the function:
 
        plot(bsxfun(@times,[1:4],[2:5]'));xlabel('X');ylabel('Y');
