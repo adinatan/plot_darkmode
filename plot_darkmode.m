@@ -2,14 +2,16 @@ function  plot_darkmode(varargin)
 % The function generates from a Matlab plot figure a version that can be
 % copied to a dark mode theme presentation or website.
 % The function replaces the default texts and box colors to
-% a user input color (default is white), make the plot area transparent to
-% accept the dark background below it. The function also transform that
-% graphic colors that are not appropriate (low contrast) to a version that
-% dark theme legible using a desaturation and brightness approach.
+% a user input color (default is white), and make the plot area transparent
+% to accept the dark background below it. The function also transform the
+% graphic colors that are not appropriate (low contrast) for a dark mode
+% theme to a version that is dark theme legible using a desaturation and
+% brightness approach.
 %
 % preparing this function I was inspired by https://material.io/design/color/dark-theme.html
 %
-% The function doesn't support all figure objects (such as tiledlayout)
+% The function is a work in progess and doesn't support all figure objects
+% (such as tiledlayout, etc)
 
 %  Inputs:
 %  varargin(1)- The text color to modify (default is white)
