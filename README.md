@@ -19,3 +19,5 @@ How to the function:
 
   next copy the figure from the clipboard using Edit>Copy Figure and  paste it on top of the dark background theme, for example in
   PowerPoint. Make sure that in the Copy Option, the  Transparent Background is enabled
+  
+  ![plot](./plot_darkmode_img.png)
