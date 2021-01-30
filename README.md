@@ -1,18 +1,23 @@
 # plot_darkmode
-convert a regular matlab plot to fit a dark mode theme background
+[![View dark mode plot  on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/86533-dark-mode-plot)
 
 
-The function generates from a Matlab plot figure a version that can be copied to a dark mode theme presentation or website. 
-It replaces the default texts and box colors to a user input color (default is white), make the plot area transparent to
- accept the dark background below it. 
-The function also transform the graphic colors that are not appropriate (low contrast) to a version that
-is dark theme legible using a desaturation and brightness approach.
+
+Transform your MATLAB plots to fit dark mode theme backgrounds! The function test which of the figure colors are not suitable to be used over a dark background (via color contrast), and adjust colors accordingly using a desaturation and brightness approach. In addition, it transforms the relevant Matlab figure attributes, such as axis and text colors, and figure background. The result is a transformed figure that can be copied to a dark mode theme presentation or website.
+How to use the function:
+generate or import a Matlab figure and run the function, for example:
+
+plot(bsxfun(@times,[1:4],[2:5]'));xlabel('X');ylabel('Y');
+plot_darkmode
+
+Copy the figure from the clipboard using *Edit>Copy Figure* and paste it on top of the dark background theme, for example in PowerPoint. Make sure that in the *Copy Option*, the *Transparent Background* is enabled. The function was tested with Matlab 2019b - Win10.
+
 
 Preparing this function I was inspired by https://material.io/design/color/dark-theme.html
 
 
 How to use the function:
- generate or import a Matlab figure and run the function:
+ generate or import a Matlab figure and run the function, for example:
 
        plot(bsxfun(@times,[1:4],[2:5]'));xlabel('X');ylabel('Y');
        plot_darkmode
