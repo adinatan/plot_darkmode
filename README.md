@@ -1,4 +1,4 @@
-# plot_darkmode
+# dark mode plot 
 [![View dark mode plot  on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/86533-dark-mode-plot)
 
 
