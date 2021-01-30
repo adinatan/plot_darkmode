@@ -19,13 +19,13 @@ function  plot_darkmode(varargin)
 %  varargin(3)- The dark background  (default is gray of value 0.16)
 %
 %
-%  How to the function:
-%  generate or import a Matlab figure and run the function:
+%  How to use the function:
+%  generate or import a Matlab figure and run the function, for example:
 %
 %       plot(bsxfun(@times,[1:4],[2:5]'));xlabel('X');ylabel('Y');
 %       plot_darkmode
 %
-%  next copy the figure from the clipboard using Edit>Copy Figure and
+%  Copy the figure from the clipboard using Edit>Copy Figure and
 %  paste it on top of the dark background theme, for example in
 %  PowerPoint. Make sure that in the Copy Option, the  Transparent
 %  Background is enabled
