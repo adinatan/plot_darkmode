@@ -19,19 +19,19 @@ function  plot_darkmode(varargin)
 %  varargin(3)- The dark background  (default is gray of value 0.16)
 %
 %
-%  How to use the function:
-%  generate or import a Matlab figure and run the function, for example:
+%  How to the function:
+%  generate or import a Matlab figure and run the function:
 %
 %       plot(bsxfun(@times,[1:4],[2:5]'));xlabel('X');ylabel('Y');
 %       plot_darkmode
 %
-%  Copy the figure from the clipboard using Edit>Copy Figure and
+%  next copy the figure from the clipboard using Edit>Copy Figure and
 %  paste it on top of the dark background theme, for example in
 %  PowerPoint. Make sure that in the Copy Option, the  Transparent
 %  Background is enabled
 
 
-%   Ver 1 (2021-01-27)
+%   Ver 1.01 (2021-02-25)
 %   Adi Natan (natan@stanford.edu)
 
 %% defaults
@@ -104,11 +104,15 @@ for n=1:numel(axes_ind)
     errorbar_ind = find(strcmp(g2,'errorbar'));
     area_ind  = find(strcmp(g2,'area'));
     bar_ind  = find(strcmp(g2,'bar'));
-    %contour_ind  = find(strcmp(g2,'contour'));
+    % contour_ind  = find(strcmp(g2,'contour'));
+    % surface_ind = find(strcmp(g2,'surface'));
     
     % edit texts color
     for m=1:numel(text_ind)
-        h2(text_ind(m)).Color=textcolor;
+        h2(text_ind(m)).Color=adjust_color( h2(text_ind(m)).Color ,tcd);
+        if ~strcmp( h2(text_ind(m)).BackgroundColor,'none')
+            h2(text_ind(m)).BackgroundColor = tcd{3};    %if text has some background color switch to dark bkg theme 
+        end   
     end
     
     % brighten patch colors if dim (use for the case of arrows etc)
@@ -247,6 +251,7 @@ if strcmp(in,'none')
     out=in;
     return
 end
+
 dark_bkg_assumption=tcd{3};
 
 % find the perceived lightness which is measured by some vision models
@@ -261,8 +266,7 @@ sRGB2Lin=@(in) (in./12.92).*(in<= 0.04045) +  ( ((in+0.055)./1.055).^2.4 ).*(in>
 %Y = @(in) sum(sRGB2Lin(in).*[0.2126,  0.7152,  0.0722 ]);
 Y = @(in) sum(bsxfun(@times,sRGB2Lin( in ),[0.2126,  0.7152,  0.0722 ]),2 );
 Lstar = @(in)  0.01.*( (Y(in).*903.3).*(Y(in)<= 0.008856) + (Y(in).^(1/3).*116-16).*(Y(in)>0.008856));
-
-%dark_bkg_assumption = (ones(1,3)*0.16); % can be modfied
+ 
 Ybkg = sum(sRGB2Lin(dark_bkg_assumption).*[0.2126,  0.7152,  0.0722 ]);
 
 cr = @(in)   (Y(in)' + 0.05) ./ (Ybkg + 0.05); % contrast ratio
