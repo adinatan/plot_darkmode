@@ -252,6 +252,11 @@ if strcmp(in,'none')
     return
 end
 
+if isa(in,'char') ; % for 'flat' etc...
+   out=in;
+    return
+end
+
 dark_bkg_assumption=tcd{3};
 
 % find the perceived lightness which is measured by some vision models
