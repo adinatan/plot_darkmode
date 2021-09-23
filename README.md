@@ -20,3 +20,6 @@ Copy the figure from the clipboard using *Edit>Copy Figure* and paste it on top 
 
 
   ![plot](./plot_darkmode_img.png)
+
+To Do:
+write a version of the sub function adjust_color to adjust colormaps based on similar reasoning, (or replace colormaps?)
