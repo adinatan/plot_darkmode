@@ -31,7 +31,7 @@ function  plot_darkmode(varargin)
 %  Background is enabled
 
 
-%   Ver 1.02 (2021-09-22)
+%   Ver 1.1 (2021-09-22)
 %   Adi Natan (natan@stanford.edu)
 
 %% defaults
