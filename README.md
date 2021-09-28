@@ -21,5 +21,8 @@ Copy the figure from the clipboard using *Edit>Copy Figure* and paste it on top 
 
   ![plot](./plot_darkmode_img.png)
 
+Known bugs:
+1. surf plot works on screen, but fails in the copy-paste procedure.
+
 To Do:
-write a version of the sub function adjust_color to adjust colormaps based on similar reasoning, (or replace colormaps?)
+1. write a version of the sub function adjust_color to adjust colormaps based on similar reasoning, (or replace colormaps?)
