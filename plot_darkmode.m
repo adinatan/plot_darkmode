@@ -31,21 +31,21 @@ function  plot_darkmode(varargin)
 %  Background is enabled
 
 
-%   Ver 1.1 (2021-09-22)
+%   Ver 1.02 (2021-09-28)
 %   Adi Natan (natan@stanford.edu)
 
 %% defaults
 switch nargin
     case 3
-        textcolor=varargin(1);
-        contrast_ratio=varargin(2);
-        dark_bkg_assumption=varargin(3);
+        textcolor=varargin{1};
+        contrast_ratio=varargin{2};
+        dark_bkg_assumption=varargin{3};
     case 2
-        textcolor=varargin(1);
-        contrast_ratio=varargin(2);
+        textcolor=varargin{1};
+        contrast_ratio=varargin{2};
         dark_bkg_assumption= ones(1,3)*0.16;
     case 1
-        textcolor=varargin(1);
+        textcolor=varargin{1};
         contrast_ratio=4.5;
         dark_bkg_assumption= ones(1,3)*0.16;
     otherwise
@@ -69,6 +69,7 @@ else
     axes_ind      =  findobj(h,'type','Axes');
     legend_ind    =  findobj(h,'type','Legend');
     colorbar_ind  =  findobj(h,'type','Colorbar');
+    
 end
 
 
@@ -85,7 +86,7 @@ for n=1:numel(axes_ind)
         axes_ind(n).YTickLabel{m} = ['\color[rgb]' sprintf('{%f,%f,%f}%s',textcolor)    axes_ind(n).YTickLabel{m} ];
     end
     
-    axes_ind(n) .Color        = 'none';    % make white area transparent
+    axes_ind(n) .Color        = tcd{3};% 'none';    % make white area transparent
     axes_ind(n).XColor       = textcolor; % edit x axis color
     axes_ind(n).YColor       = textcolor; % edit y axis color
     axes_ind(n).ZColor       = textcolor; % edit z axis color
