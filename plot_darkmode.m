@@ -302,7 +302,7 @@ if cr(in)<tcd{2} % default is 4.5
     end
     
     
-    % if saturation is what reduce contrast desaturate
+    % if saturation is what reduce contrast then desaturate
     in_hsv=rgb2hsv(in);
     if in_hsv(2)>0.5
         
@@ -315,7 +315,7 @@ if cr(in)<tcd{2} % default is 4.5
         end
     end
     
-    % desaturation alone didn't solve it, try increase brightness
+    % desaturation alone didn't solve it, try to increase brightness
     fun2 =  @(x) abs(cr(br(in,x))-tcd{2});
     [br_factor, val]=fminbnd(fun2,0,1);
     
@@ -328,7 +328,7 @@ if cr(in)<tcd{2} % default is 4.5
     fun3 = @(x) abs(cr(ds(br(in,br_factor),x))-tcd{2});
     [brds_factor, val]=fminbnd(fun3,0,1);
     
-    if val<1e-2 && ds(br(in,br_factor),brds_factor)
+    if val<1e-2 && Lstar(ds(br(in,br_factor),brds_factor))>0.5
         out = ds(br(in,br_factor),brds_factor);
         return
         
