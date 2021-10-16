@@ -31,7 +31,7 @@ function  plot_darkmode(varargin)
 %  Background is enabled
 
 
-%   Ver 1.11 (2021-09-28)
+%   Ver 1.02 (2021-09-28)
 %   Adi Natan (natan@stanford.edu)
 
 %% defaults
@@ -65,11 +65,16 @@ if ~strcmp(g,'tiledlayout')
     legend_ind    =  findobj(h,'type','Legend');
     colorbar_ind  =  findobj(h,'type','Colorbar');
 else
+    h0= get(gcf,'children');
+    h0.Title.Color    =  textcolor;
+    h0.Subtitle.Color =  textcolor;
+    
     h=get(get(gcf,'children'),'children');
+    
     axes_ind      =  findobj(h,'type','Axes');
     legend_ind    =  findobj(h,'type','Legend');
     colorbar_ind  =  findobj(h,'type','Colorbar');
-    
+   
 end
 
 
@@ -110,6 +115,7 @@ for n=1:numel(axes_ind)
     errorbar_ind = find(strcmp(g2,'errorbar'));
     area_ind  = find(strcmp(g2,'area'));
     bar_ind  = find(strcmp(g2,'bar'));
+    hist_ind = find(strcmp(g2,'histogram'));
     % contour_ind  = find(strcmp(g2,'contour'));
     % surface_ind = find(strcmp(g2,'surface'));
     
@@ -147,6 +153,12 @@ for n=1:numel(axes_ind)
     for m=1:numel(bar_ind)
         h2(bar_ind(m)).FaceColor = adjust_color(h2(bar_ind(m)).FaceColor,tcd);
         h2(bar_ind(m)).EdgeColor = adjust_color(h2(bar_ind(m)).EdgeColor,tcd);
+    end
+
+
+    for m=1:numel(hist_ind)
+        h2(hist_ind(m)).FaceColor = adjust_color(h2(hist_ind(m)).FaceColor,tcd);
+        h2(hist_ind(m)).EdgeColor = adjust_color(h2(hist_ind(m)).EdgeColor,tcd);
     end
     
     %       for m=1:numel(contour_ind)
