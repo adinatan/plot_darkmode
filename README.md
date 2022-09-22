@@ -27,4 +27,4 @@ Known bugs:
 
 To Do:
 1. write a version of the sub function adjust_color to adjust colormaps based on similar reasoning, (or replace colormaps?)
-2. Extend adjustColor to objects that has alpha (transprency) property.
+2. ~~Extend adjustColor to objects that has alpha (transprency) property.~~ Done!
