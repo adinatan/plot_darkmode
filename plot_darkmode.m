@@ -31,7 +31,7 @@ function  plot_darkmode(varargin)
 %  Background is enabled
 
 
-%   Ver 1.02 (2021-09-28)
+%   Ver 1.03 (2022-09-21)
 %   Adi Natan (natan@stanford.edu)
 
 %% defaults
@@ -102,8 +102,10 @@ for n=1:numel(axes_ind)
     
     axes_ind(n).Title.Color  = textcolor; % edit title text color
     
-    axes_ind(n).GridColor =  adjust_color( axes_ind(n).GridColor,tcd);
-    axes_ind(n).MinorGridColor =  adjust_color(axes_ind(n).MinorGridColor,tcd);
+    % grids have alpha property that needs more care
+    axes_ind(n).GridColor =  adjust_color( axes_ind(n).GridColor,tcd,axes_ind(n).GridAlpha);
+    axes_ind(n).MinorGridColor =  adjust_color(axes_ind(n).MinorGridColor,tcd,axes_ind(n).GridAlpha);
+    axes_ind(n).GridAlpha = 1;
     % axes_ind(n).Subtitle.Color = textcolor;
     
     % take care of other axes children:
@@ -252,7 +254,7 @@ if ~isempty(ha)
     
 end
 
-function  out=adjust_color(in,tcd)
+function  out=adjust_color(varargin)
 % This function modifies an input color to fit a dark theme background.
 % For that a color needs to have sufficient contrast (WCAG's AA standard of at least 4.5:1)
 % The contrast ratio is calculate via :  cr = (L1 + 0.05) / (L2 + 0.05),
@@ -263,6 +265,22 @@ function  out=adjust_color(in,tcd)
 % via desaturation and brightness to be more legible.
 % the function uses fminbnd, if you dont have the toolbox to use it you can
 % replace it with fmintx (avaiable in Matlab's file exchange)
+ 
+if nargin==1
+   in = varargin{1};
+   tcd= {[1 1 1],4.5,[0.16 0.16 0.16]};
+   alpha=1;
+   elseif nargin==2
+   in = varargin{1};
+   tcd= varargin{2};
+   alpha=1;
+   elseif nargin==3
+   in = varargin{1};
+   tcd= varargin{2};
+   alpha= varargin{3};
+
+end
+
 
 % if color is 'none' return as is
 if strcmp(in,'none')
@@ -276,6 +294,12 @@ if isa(in,'char') % for inputs such as 'flat' etc...
 end
 
 dark_bkg_assumption=tcd{3};
+
+% the apparent color will be a combination of the original color and
+% the bkg behind it given the alpha value.
+in=in.*alpha+(1-alpha).*dark_bkg_assumption;
+
+
 
 % find the perceived lightness which is measured by some vision models
 % such as CIELAB to approximate the human vision non-linear response curve.
@@ -354,4 +378,5 @@ if cr(in)<tcd{2} % default is 4.5
 else
     out = in ;
 end
+
 
