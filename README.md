@@ -23,7 +23,6 @@ Copy the figure from the clipboard using *Edit>Copy Figure* and paste it on top 
 
 Known bugs:
 1. surf plot works on screen, but fails in the copy-paste procedure.
-~~2. Transparecy (alpha) is not considered by the adjustColor function, causing Minor Grids to be too dim at dark bkgs.  ~~
 
 To Do:
 1. write a version of the sub function adjust_color to adjust colormaps based on similar reasoning, (or replace colormaps?)
