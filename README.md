@@ -1,7 +1,5 @@
 # dark mode plot 
-[![View dark mode plot  on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/86533-dark-mode-plot)
-
-[![The function got Matlab's File Exchange Pick Of the Week !]](https://blogs.mathworks.com/pick/2022/10/19/figures-for-dark-mode/)
+[![View dark mode plot  on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/86533-dark-mode-plot) [Selected Pick Of the Week!](https://blogs.mathworks.com/pick/2022/10/19/figures-for-dark-mode/)
  
 
 
