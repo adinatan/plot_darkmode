@@ -1,6 +1,8 @@
 # dark mode plot 
 [![View dark mode plot  on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/86533-dark-mode-plot)
 
+[![The function got Matlab's File Exchange Pick Of the Week !]](https://blogs.mathworks.com/pick/2022/10/19/figures-for-dark-mode/)
+ 
 
 
 Transform your MATLAB plots to fit dark mode theme backgrounds! The function test which of the figure colors are not suitable to be used over a dark background (via color contrast), and adjust colors accordingly using a desaturation and brightness approach. In addition, it transforms the relevant Matlab figure attributes, such as axis and text colors, and figure background. The result is a transformed figure that can be copied to a dark mode theme presentation or website.
