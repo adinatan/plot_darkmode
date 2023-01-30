@@ -64,6 +64,8 @@ if ~strcmp(g,'tiledlayout')
     axes_ind      =  findobj(h,'type','Axes');
     legend_ind    =  findobj(h,'type','Legend');
     colorbar_ind  =  findobj(h,'type','Colorbar');
+    polaraxes_ind=   findobj(h,'type','PolarAxes');
+ 
 else
     h0= get(gcf,'children');
     h0.Title.Color    =  textcolor;
@@ -74,11 +76,15 @@ else
     axes_ind      =  findobj(h,'type','Axes');
     legend_ind    =  findobj(h,'type','Legend');
     colorbar_ind  =  findobj(h,'type','Colorbar');
-   
+    polaraxes_ind=   findobj(h,'type','PolarAxes');
+
 end
 
 
 %% modify Axes
+
+
+
 for n=1:numel(axes_ind)
     
     % edit x-ticks color
@@ -184,6 +190,56 @@ for n=1:numel(legend_ind)
     legend_ind(n).Box       = 'off';      % delete box
 end
 
+%% modify polar axes
+for n=1:numel(polaraxes_ind)
+
+    
+    polaraxes_ind(n) .Color        = tcd{3};% 'none';    % make white area transparent
+    polaraxes_ind(n).ThetaColor = textcolor;
+    polaraxes_ind(n).RColor = textcolor;
+
+    polaraxes_ind(n).Title.Color = textcolor;
+    polaraxes_ind(n).Subtitle.Color = textcolor;
+
+    % grids have alpha property that needs more care
+    polaraxes_ind(n).GridColor =  adjust_color( polaraxes_ind(n).GridColor,tcd,polaraxes_ind(n).GridAlpha);
+    polaraxes_ind(n).MinorGridColor =  adjust_color(polaraxes_ind(n).MinorGridColor,tcd,polaraxes_ind(n).GridAlpha);
+    polaraxes_ind(n).GridAlpha = 1;
+    polaraxes_ind(n).MinorGridAlpha=0.75;
+       
+        for nc=1:size( polaraxes_ind(n).ColorOrder,1)
+             polaraxes_ind(n).ColorOrder(nc,:)=adjust_color(polaraxes_ind(n).ColorOrder(nc,:),tcd);
+        end
+
+         % take care of other axes children:
+    h2 = get(polaraxes_ind(n),'Children');
+    g2 = get(polaraxes_ind(n).Children,'type');
+    text_ind  = find(strcmp(g2,'text'));
+    patch_ind = find(strcmp(g2,'patch'));
+    line_ind  = find(strcmp(g2,'line'));
+ 
+    % edit texts color
+    for m=1:numel(text_ind)
+        h2(text_ind(m)).Color=adjust_color( h2(text_ind(m)).Color ,tcd);
+        if ~strcmp( h2(text_ind(m)).BackgroundColor,'none')
+            h2(text_ind(m)).BackgroundColor = tcd{3};    %if text has some background color switch to dark bkg theme
+        end
+    end
+    
+    % brighten patch colors if dim (use for the case of arrows etc)
+    % this might not work well for all patch types so consider to comment
+    for m=1:numel(patch_ind)
+        h2(patch_ind(m)).FaceColor = adjust_color(h2(patch_ind(m)).FaceColor,tcd);
+        h2(patch_ind(m)).EdgeColor = adjust_color(h2(patch_ind(m)).EdgeColor,tcd);
+    end
+    
+    for m=1:numel(line_ind)
+        h2(line_ind(m)).Color = adjust_color(h2(line_ind(m)).Color,tcd);
+   h2(line_ind(m)).MarkerFaceColor = adjust_color(h2(line_ind(m)).MarkerFaceColor,tcd);
+   h2(line_ind(m)).MarkerEdgeColor = adjust_color(h2(line_ind(m)).MarkerEdgeColor,tcd);
+    end
+ end
+
 
 %% modify annotations:
 
@@ -288,7 +344,7 @@ if strcmp(in,'none')
     return
 end
 
-if isa(in,'char') % for inputs such as 'flat' etc...
+if isa(in,'char') % for inputs such as 'flat', 'auto', etc...
     out=in;
     return
 end
