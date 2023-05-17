@@ -62,12 +62,11 @@ g = get(get(gcf,'children'),'type');
 if ~strcmp(g,'tiledlayout')
     h = get(gcf,'children');
     axes_ind      =  findobj(h,'type','Axes');
-    surface_ind   =  findobj(h,'type','Surface');
     legend_ind    =  findobj(h,'type','Legend');
     colorbar_ind  =  findobj(h,'type','Colorbar');
     polaraxes_ind =  findobj(h,'type','PolarAxes');
     boxchart_ind  =  findobj(h,'type','BoxChart');
- 
+
 
 else
     h0= get(gcf,'children');
@@ -77,20 +76,15 @@ else
     h=get(get(gcf,'children'),'children');
 
     axes_ind      =  findobj(h,'type','Axes');
-    surface_ind   =  findobj(h,'type','Surface');
     legend_ind    =  findobj(h,'type','Legend');
     colorbar_ind  =  findobj(h,'type','Colorbar');
     polaraxes_ind =  findobj(h,'type','PolarAxes');
     boxchart_ind  =  findobj(h,'type','BoxChart');
- 
 
 end
 
 
 %% modify Axes
-
-
-
 for n=1:numel(axes_ind)
 
     % edit x-ticks color
@@ -103,7 +97,7 @@ for n=1:numel(axes_ind)
         axes_ind(n).YTickLabel{m} = ['\color[rgb]' sprintf('{%f,%f,%f}%s',textcolor)    axes_ind(n).YTickLabel{m} ];
     end
 
-    axes_ind(n) .Color        = tcd{3};% 'none';    % make white area transparent
+    axes_ind(n).Color        = tcd{3};% 'none';    % make white area transparent
     axes_ind(n).XColor       = textcolor; % edit x axis color
     axes_ind(n).YColor       = textcolor; % edit y axis color
     axes_ind(n).ZColor       = textcolor; % edit z axis color
@@ -134,8 +128,9 @@ for n=1:numel(axes_ind)
     area_ind  = find(strcmp(g2,'area'));
     bar_ind  = find(strcmp(g2,'bar'));
     hist_ind = find(strcmp(g2,'histogram'));
-    % contour_ind  = find(strcmp(g2,'contour'));
-    % surface_ind = find(strcmp(g2,'surface'));
+    surface_ind = find(strcmp(g2,'surface'));
+    histogram_ind  = find(strcmp(g2,'histogram'));
+
 
     % edit texts color
     for m=1:numel(text_ind)
@@ -148,8 +143,29 @@ for n=1:numel(axes_ind)
     % brighten patch colors if dim (use for the case of arrows etc)
     % this might not work well for all patch types so consider to comment
     for m=1:numel(patch_ind)
-        h2(patch_ind(m)).FaceColor = adjust_color(h2(patch_ind(m)).FaceColor,tcd);
-        h2(patch_ind(m)).EdgeColor = adjust_color(h2(patch_ind(m)).EdgeColor,tcd);
+        if  all(h2(patch_ind(m)).FaceColor==1) % for cases such as in waterfall
+            h2(patch_ind(m)).FaceColor =  tcd{3};
+        else % for cases such as in pie chart \ area
+            h2(patch_ind(m)).FaceColor = adjust_color(h2(patch_ind(m)).FaceColor,tcd);
+        end
+
+        if  all(h2(patch_ind(m)).EdgeColor==1) %
+            h2(patch_ind(m)).EdgeColor = tcd{3};
+
+        else
+            h2(patch_ind(m)).EdgeColor = adjust_color(h2(patch_ind(m)).EdgeColor,tcd);
+        end
+
+    end
+
+    for m=1:numel(surface_ind)
+
+        if  ~all(h2(surface_ind(m)).EdgeColor==0)
+            %    h2(surface_ind(m)).EdgeColor = tcd{1};
+            % else
+            h2(surface_ind(m)).EdgeColor =  adjust_color( h2(surface_ind(m)).EdgeColor ,tcd);
+        end
+
     end
 
     for m=1:numel(line_ind)
@@ -179,11 +195,11 @@ for n=1:numel(axes_ind)
         h2(hist_ind(m)).EdgeColor = adjust_color(h2(hist_ind(m)).EdgeColor,tcd);
     end
 
-    %       for m=1:numel(contour_ind)
-    %         h2(contour_ind(m)).FaceColor = adjust_color(h2(contour_ind(m)).FaceColor,tcd);
-    %         h2(contour_ind(m)).EdgeColor = adjust_color(h2(contour_ind(m)).EdgeColor,tcd);
-    %     end
-
+    for m=1:numel(histogram_ind)
+        h2(histogram_ind(m)).FaceColor = adjust_color(h2(histogram_ind(m)).FaceColor,tcd);
+        h2(histogram_ind(m)).EdgeColor = tcd{3};
+        h2(histogram_ind(m)).FaceAlpha = 1;
+    end
 
 end
 %% modify Colorbars:
@@ -200,10 +216,6 @@ for n=1:numel(legend_ind)
     legend_ind(n).Box       = 'off';      % delete box
 end
 
-%% modify surface axes
-for n=1:numel(surface_ind)
-    surface_ind(n).EdgeColor=adjust_color( surface_ind(n).EdgeColor ,tcd);
-end
 
 %% modify boxchart axes
 for n=1:numel(boxchart_ind)
@@ -222,8 +234,7 @@ end
 %% modify polar axes
 for n=1:numel(polaraxes_ind)
 
-
-    polaraxes_ind(n) .Color        = tcd{3};% 'none';    % make white area transparent
+    polaraxes_ind(n).Color        = tcd{3};% 'none';    % make white area transparent
     polaraxes_ind(n).ThetaColor = textcolor;
     polaraxes_ind(n).RColor = textcolor;
 
@@ -246,6 +257,7 @@ for n=1:numel(polaraxes_ind)
     text_ind  = find(strcmp(g2,'text'));
     patch_ind = find(strcmp(g2,'patch'));
     line_ind  = find(strcmp(g2,'line'));
+    histogram_ind  = find(strcmp(g2,'histogram'));
 
     % edit texts color
     for m=1:numel(text_ind)
@@ -269,6 +281,11 @@ for n=1:numel(polaraxes_ind)
     end
 end
 
+for m=1:numel(histogram_ind)
+    h2(histogram_ind(m)).FaceColor = adjust_color(h2(histogram_ind(m)).FaceColor,tcd);
+    h2(histogram_ind(m)).EdgeColor = tcd{3};
+    h2(histogram_ind(m)).FaceAlpha = 1;
+end
 
 %% modify annotations:
 
