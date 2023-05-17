@@ -62,9 +62,12 @@ g = get(get(gcf,'children'),'type');
 if ~strcmp(g,'tiledlayout')
     h = get(gcf,'children');
     axes_ind      =  findobj(h,'type','Axes');
+    surface_ind   =  findobj(h,'type','Surface');
     legend_ind    =  findobj(h,'type','Legend');
     colorbar_ind  =  findobj(h,'type','Colorbar');
-    polaraxes_ind=   findobj(h,'type','PolarAxes');
+    polaraxes_ind =  findobj(h,'type','PolarAxes');
+    boxchart_ind  =  findobj(h,'type','BoxChart');
+ 
 
 else
     h0= get(gcf,'children');
@@ -74,9 +77,12 @@ else
     h=get(get(gcf,'children'),'children');
 
     axes_ind      =  findobj(h,'type','Axes');
+    surface_ind   =  findobj(h,'type','Surface');
     legend_ind    =  findobj(h,'type','Legend');
     colorbar_ind  =  findobj(h,'type','Colorbar');
-    polaraxes_ind=   findobj(h,'type','PolarAxes');
+    polaraxes_ind =  findobj(h,'type','PolarAxes');
+    boxchart_ind  =  findobj(h,'type','BoxChart');
+ 
 
 end
 
@@ -113,6 +119,10 @@ for n=1:numel(axes_ind)
     axes_ind(n).MinorGridColor =  adjust_color(axes_ind(n).MinorGridColor,tcd,axes_ind(n).GridAlpha);
     axes_ind(n).GridAlpha = 1;
     % axes_ind(n).Subtitle.Color = textcolor;
+
+    for nc=1:size( axes_ind(n).ColorOrder,1)
+        axes_ind(n).ColorOrder(nc,:)=adjust_color(axes_ind(n).ColorOrder(nc,:),tcd);
+    end
 
     % take care of other axes children:
     h2 = get(axes_ind(n),'Children');
@@ -188,6 +198,25 @@ for n=1:numel(legend_ind)
     legend_ind(n).Color     = 'none';     % make white area transparent
     legend_ind(n).TextColor = textcolor;  % edit text color
     legend_ind(n).Box       = 'off';      % delete box
+end
+
+%% modify surface axes
+for n=1:numel(surface_ind)
+    surface_ind(n).EdgeColor=adjust_color( surface_ind(n).EdgeColor ,tcd);
+end
+
+%% modify boxchart axes
+for n=1:numel(boxchart_ind)
+
+    % boxchart_ind(n) .Color        = tcd{3};% 'none';    % make white area transparent
+    % boxchart_ind(n).Title.Color = textcolor;
+    % boxchart_ind(n).Subtitle.Color = textcolor;
+    boxchart_ind(n).BoxEdgeColor=adjust_color( boxchart_ind(n).BoxEdgeColor ,tcd);
+    boxchart_ind(n).BoxFaceColor=adjust_color( boxchart_ind(n).BoxFaceColor ,tcd);
+    boxchart_ind(n).MarkerColor=adjust_color( boxchart_ind(n).MarkerColor ,tcd);
+    boxchart_ind(n).WhiskerLineColor=adjust_color( boxchart_ind(n).WhiskerLineColor ,tcd);
+
+
 end
 
 %% modify polar axes
@@ -303,12 +332,11 @@ if ~isempty(ha)
         for m=1:numel(lineshape_ind)
             hAnnotChildren(lineshape_ind(m)).Color = adjust_color(hAnnotChildren(lineshape_ind(m)).Color,tcd);
         end
-
-
     end
-
-
 end
+
+set(gcf, 'color', tcd{3});
+
 
 function  out=adjust_color(varargin)
 % This function modifies an input color to fit a dark theme background.
@@ -434,5 +462,3 @@ if cr(in)<tcd{2} % default is 4.5
 else
     out = in ;
 end
-
-
