@@ -20,6 +20,6 @@ Copy the figure from the clipboard using *Edit>Copy Figure* and paste it on top 
 
 
   ![plot](./plot_darkmode_img.png)
-  ![plot](./test_plot_darkmode.png)
+  ![plot](./test_plot_darkmod.png)
 
 
